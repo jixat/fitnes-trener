@@ -7,6 +7,49 @@ export const CATEGORIES = [
   { id: 'stretching', label: 'Растяжка', icon: '🧘‍♀️' },
 ];
 
+export const MUSCLE_GROUPS = [
+  { id: 'all', label: 'Все мышцы' },
+  { id: 'Грудные мышцы', label: 'Грудь' },
+  { id: 'Спина', label: 'Спина' },
+  { id: 'Ноги', label: 'Ноги' },
+  { id: 'Плечи', label: 'Плечи' },
+  { id: 'Руки', label: 'Руки' },
+  { id: 'Пресс', label: 'Пресс' },
+];
+
+export const WORKOUT_PLANS = [
+  {
+    id: 'home-fullbody',
+    title: 'Фулбоди для дома',
+    level: 'Все уровни',
+    duration: '25 мин',
+    calories: '300 ккал',
+    description: 'Комплексная тренировка на все группы мышц без дополнительного оборудования. Идеально для старта.',
+    imageBg: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
+    exercises: [
+      { id: 'squats-home', sets: 4, reps: '15' },
+      { id: 'pushups-home', sets: 3, reps: '15' },
+      { id: 'lunges-home', sets: 3, reps: '12 на ногу' },
+      { id: 'plank-core', sets: 3, reps: '45 сек' },
+      { id: 'burpees-cardio', sets: 3, reps: '10' }
+    ]
+  },
+  {
+    id: 'gym-strength',
+    title: 'Универсальный сплит (Зал)',
+    level: 'Средний',
+    duration: '45 мин',
+    calories: '450 ккал',
+    description: 'Силовая тренировка в тренажерном зале на базовые группы мышц.',
+    imageBg: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+    exercises: [
+      { id: 'squats-barbell', sets: 4, reps: '10' },
+      { id: 'bench-press', sets: 4, reps: '10' },
+      { id: 'crunch-home', sets: 3, reps: '20' }
+    ]
+  }
+];
+
 export const WORKOUTS_DATA = [
   {
     id: 'squats-barbell',
@@ -16,7 +59,7 @@ export const WORKOUTS_DATA = [
     level: 'Средний',
     duration: '15 мин',
     calories: '140 ккал',
-    targetMuscles: ['Квадрицепсы', 'Ягодицы', 'Бицепс бедра', 'Кор'],
+    targetMuscles: ['Ноги', 'Ягодицы', 'Кор'],
     defaultSets: 4,
     defaultReps: 12,
     restSeconds: 60,
@@ -40,7 +83,7 @@ export const WORKOUTS_DATA = [
     level: 'Начинающий',
     duration: '12 мин',
     calories: '110 ккал',
-    targetMuscles: ['Большая грудная', 'Передняя дельта', 'Трицепс'],
+    targetMuscles: ['Грудные мышцы', 'Плечи', 'Руки'],
     defaultSets: 4,
     defaultReps: 10,
     restSeconds: 60,
@@ -64,7 +107,7 @@ export const WORKOUTS_DATA = [
     level: 'Начинающий',
     duration: '10 мин',
     calories: '90 ккал',
-    targetMuscles: ['Грудные мышцы', 'Трицепсы', 'Плечи', 'Пресс'],
+    targetMuscles: ['Грудные мышцы', 'Руки', 'Плечи', 'Пресс'],
     defaultSets: 3,
     defaultReps: 15,
     restSeconds: 45,
@@ -80,6 +123,77 @@ export const WORKOUTS_DATA = [
     imageBg: 'linear-gradient(135deg, #10b981 0%, #047857 100%)'
   },
   {
+    id: 'squats-home',
+    title: 'Воздушные приседания',
+    category: 'home',
+    subcategory: 'strength',
+    level: 'Начинающий',
+    duration: '10 мин',
+    calories: '80 ккал',
+    targetMuscles: ['Ноги', 'Ягодицы'],
+    defaultSets: 4,
+    defaultReps: 20,
+    restSeconds: 45,
+    type: 'video',
+    demoType: 'squat',
+    description: 'Приседания с собственным весом. Отличная база для тренировок дома.',
+    steps: [
+      'Ноги на ширине плеч, носки чуть в стороны.',
+      'Опускайтесь тазом назад, как будто садитесь на стул.',
+      'Держите спину ровной, а колени в направлении носков.',
+      'Вернитесь в исходное положение.'
+    ],
+    proTips: 'Вес тела должен быть на пятках, а не на носках.',
+    imageBg: 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)'
+  },
+  {
+    id: 'lunges-home',
+    title: 'Выпады на месте',
+    category: 'home',
+    subcategory: 'strength',
+    level: 'Средний',
+    duration: '12 мин',
+    calories: '100 ккал',
+    targetMuscles: ['Ноги', 'Ягодицы'],
+    defaultSets: 3,
+    defaultReps: 12,
+    restSeconds: 45,
+    type: 'video',
+    demoType: 'lunge',
+    description: 'Отличное упражнение для проработки бедер и координации.',
+    steps: [
+      'Сделайте широкий шаг вперед одной ногой.',
+      'Опуститесь вниз так, чтобы оба колена образовали угол 90 градусов.',
+      'Оттолкнитесь передней ногой и вернитесь в исходное положение.'
+    ],
+    proTips: 'Колено передней ноги не должно выходить за носок.',
+    imageBg: 'linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)'
+  },
+  {
+    id: 'crunch-home',
+    title: 'Скручивания на пресс',
+    category: 'home',
+    subcategory: 'strength',
+    level: 'Начинающий',
+    duration: '8 мин',
+    calories: '60 ккал',
+    targetMuscles: ['Пресс'],
+    defaultSets: 3,
+    defaultReps: 20,
+    restSeconds: 30,
+    type: 'video',
+    demoType: 'crunch',
+    description: 'Базовое упражнение для проработки прямой мышцы живота (кубиков).',
+    steps: [
+      'Лягте на спину, ноги согните в коленях, стопы на полу.',
+      'Руки за головой или скрещены на груди.',
+      'На выдохе оторвите лопатки от пола, сокращая мышцы пресса.',
+      'Плавно вернитесь обратно.'
+    ],
+    proTips: 'Не тяните себя за шею руками! Работайте только прессом.',
+    imageBg: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)'
+  },
+  {
     id: 'burpees-cardio',
     title: 'Берпи (Burpees)',
     category: 'cardio',
@@ -87,7 +201,7 @@ export const WORKOUTS_DATA = [
     level: 'Продвинутый',
     duration: '15 мин',
     calories: '200 ккал',
-    targetMuscles: ['Все тело', 'Сердечная мышца', 'Ноги', 'Плечи'],
+    targetMuscles: ['Грудные мышцы', 'Ноги', 'Плечи', 'Сердечная мышца'],
     defaultSets: 4,
     defaultReps: 15,
     restSeconds: 45,
@@ -111,7 +225,7 @@ export const WORKOUTS_DATA = [
     level: 'Все уровни',
     duration: '8 мин',
     calories: '60 ккал',
-    targetMuscles: ['Прямая мышца живота', 'Поясница', 'Ягодицы'],
+    targetMuscles: ['Пресс', 'Спина'],
     defaultSets: 3,
     defaultReps: '60 сек',
     restSeconds: 30,
@@ -125,28 +239,5 @@ export const WORKOUTS_DATA = [
     ],
     proTips: 'Не поднимайте таз высоко вверх и не проваливайтесь в пояснице.',
     imageBg: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)'
-  },
-  {
-    id: 'stretch-hamstring',
-    title: 'Растяжка бицепса бедра',
-    category: 'stretching',
-    subcategory: 'stretching',
-    level: 'Начинающий',
-    duration: '10 мин',
-    calories: '40 ккал',
-    targetMuscles: ['Бицепс бедра', 'Подколенные сухожилия', 'Поясница'],
-    defaultSets: 3,
-    defaultReps: '45 сек',
-    restSeconds: 30,
-    type: 'video',
-    demoType: 'stretch',
-    description: 'Упражнение для гибкости задней поверхности бедра и снятия напряжения со спины.',
-    steps: [
-      'Сядьте на пол, выпрямите одну ногу перед собой, вторую согните в колене.',
-      'На выдохе плавно наклоняйтесь корпусом вперед к прямой ноге.',
-      'Удерживайте статическое положение без резких рывков.'
-    ],
-    proTips: 'Дышите глубоко и расслабленно, тянитесь животом к бедру.',
-    imageBg: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)'
   }
 ];

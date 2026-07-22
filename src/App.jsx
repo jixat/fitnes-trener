@@ -8,19 +8,24 @@ import { AICoachChat } from './components/AICoachChat';
 import { CalorieCalculator } from './components/CalorieCalculator';
 import { WORKOUTS_DATA } from './data/workoutsData';
 import { useTelegram } from './hooks/useTelegram';
-import { Dumbbell, Timer, Bot, Calculator, ArrowLeft } from 'lucide-react';
+import { Dumbbell, Timer, Bot, Calculator, ArrowLeft, PlayCircle } from 'lucide-react';
 
 export default function App() {
   const { triggerHaptic } = useTelegram();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('workouts'); // 'workouts', 'timer', 'ai', 'calculator'
-  const [selectedExercise, setSelectedExercise] = useState(WORKOUTS_DATA[0]); // Default to first exercise matching sketch
-  const [isDetailView, setIsDetailView] = useState(true); // true matching sketch exercise view
+  
+  // View states
+  const [currentView, setCurrentView] = useState('list'); // 'list', 'exercise', 'plan'
+  const [selectedExercise, setSelectedExercise] = useState(WORKOUTS_DATA[0]);
+  const [selectedPlan, setSelectedPlan] = useState(null);
   const [restTimerSec, setRestTimerSec] = useState(60);
 
   const getHeaderTitle = () => {
     if (activeTab === 'workouts') {
-      return isDetailView ? selectedExercise?.title || 'Приседания' : 'Каталог Тренировок';
+      if (currentView === 'exercise') return selectedExercise?.title || 'Упражнение';
+      if (currentView === 'plan') return selectedPlan?.title || 'План тренировки';
+      return 'Каталог Тренировок';
     }
     if (activeTab === 'timer') return 'Таймер Отдыха';
     if (activeTab === 'ai') return 'ИИ Помощник';
@@ -30,7 +35,12 @@ export default function App() {
 
   const handleSelectExercise = (workout) => {
     setSelectedExercise(workout);
-    setIsDetailView(true);
+    setCurrentView('exercise');
+  };
+
+  const handleSelectPlan = (plan) => {
+    setSelectedPlan(plan);
+    setCurrentView('plan');
   };
 
   const handleStartRestTimer = (seconds) => {
@@ -38,16 +48,60 @@ export default function App() {
     setActiveTab('timer');
   };
 
+  // Render Plan View
+  const renderPlanView = () => {
+    if (!selectedPlan) return null;
+    return (
+      <div className="space-y-4 pb-12">
+        <div className="text-center pt-2">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
+            План тренировки • {selectedPlan.level}
+          </span>
+          <h2 className="text-2xl font-extrabold text-white tracking-tight mt-0.5">
+            {selectedPlan.title}
+          </h2>
+          <p className="text-xs text-slate-400 mt-2">{selectedPlan.description}</p>
+        </div>
+
+        <div className="space-y-3">
+          {selectedPlan.exercises.map((planEx, idx) => {
+            const exercise = WORKOUTS_DATA.find(ex => ex.id === planEx.id);
+            if (!exercise) return null;
+            return (
+              <div key={idx} className="glass-panel p-4 rounded-3xl border border-white/10 flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center border border-blue-500/30 shrink-0">
+                  {idx + 1}
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-bold text-white">{exercise.title}</h4>
+                  <div className="text-xs text-slate-400 mt-0.5">
+                    {planEx.sets} подхода по {planEx.reps}
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleSelectExercise(exercise)}
+                  className="p-2 bg-white/5 rounded-xl hover:bg-white/10 transition-colors text-slate-300"
+                >
+                  <PlayCircle className="w-5 h-5" />
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white">
-      {/* Header Bar matching sketch */}
+      {/* Header Bar */}
       <Header
         onOpenDrawer={() => setIsDrawerOpen(true)}
         title={getHeaderTitle()}
         activeTab={activeTab}
       />
 
-      {/* Slide-out Navigation Drawer matching sketch */}
+      {/* Slide-out Navigation Drawer */}
       <NavigationDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
@@ -55,7 +109,7 @@ export default function App() {
         onSelectTab={(tabId) => {
           setActiveTab(tabId);
           if (tabId === 'workouts') {
-            setIsDetailView(true); // Default to exercise view matching sketch
+            setCurrentView('list');
           }
         }}
       />
@@ -64,33 +118,41 @@ export default function App() {
       <main className="flex-1 px-4 pt-4 max-w-md mx-auto w-full">
         {activeTab === 'workouts' && (
           <div>
-            {/* View Switcher Bar */}
-            <div className="flex items-center justify-between mb-4">
-              <button
-                onClick={() => {
-                  triggerHaptic('light');
-                  setIsDetailView(!isDetailView);
-                }}
-                className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 px-3 py-1.5 rounded-xl border border-blue-500/20 active:scale-95 transition-all"
-              >
-                {isDetailView ? (
-                  <>
-                    <ArrowLeft className="w-3.5 h-3.5" /> К списку тренировок
-                  </>
-                ) : (
-                  <>Смотреть карточку упражнения →</>
-                )}
-              </button>
-            </div>
+            {/* View Switcher Bar (Back button) */}
+            {currentView !== 'list' && (
+              <div className="flex items-center justify-between mb-4">
+                <button
+                  onClick={() => {
+                    triggerHaptic('light');
+                    if (currentView === 'exercise' && selectedPlan) {
+                      // If we came from a plan, go back to plan. Otherwise go to list.
+                      setCurrentView('list'); // Keep it simple for now, go back to list
+                    } else {
+                      setCurrentView('list');
+                    }
+                  }}
+                  className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 px-3 py-1.5 rounded-xl border border-blue-500/20 active:scale-95 transition-all"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" /> К списку
+                </button>
+              </div>
+            )}
 
-            {isDetailView ? (
+            {currentView === 'list' && (
+              <WorkoutsList 
+                onSelectExercise={handleSelectExercise} 
+                onSelectPlan={handleSelectPlan}
+              />
+            )}
+            
+            {currentView === 'exercise' && (
               <ExerciseCard
                 workout={selectedExercise}
                 onStartRestTimer={handleStartRestTimer}
               />
-            ) : (
-              <WorkoutsList onSelectExercise={handleSelectExercise} />
             )}
+
+            {currentView === 'plan' && renderPlanView()}
           </div>
         )}
 
