@@ -2,7 +2,7 @@ import TelegramBot from 'node-telegram-bot-api';
 import process from 'process';
 
 const token = process.env.BOT_TOKEN || '8329670043:AAG8U3VRsJKwDAOVGbuRIXKTgye8Uf_g4bA';
-const webAppUrl = process.env.WEB_APP_URL || 'https://fitnes-trener-24.surge.sh';
+const webAppUrl = process.env.WEB_APP_URL || 'https://jixat.github.io/fitnes-trener/';
 
 const bot = new TelegramBot(token, { polling: true });
 
