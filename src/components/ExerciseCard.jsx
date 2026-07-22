@@ -1,25 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw, Check, Clock, Flame, Dumbbell, ShieldCheck, ChevronRight, Zap, Volume2, VolumeX } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import React, { useState, useEffect, useRef } from 'react';
+import { Play, Pause, Check, Clock, Flame, Dumbbell, ShieldCheck, Zap } from 'lucide-react';
 import { useTelegram } from '../hooks/useTelegram';
 
-export function ExerciseCard({ workout, onStartRestTimer }) {
+export function ExerciseCard({ workout }) {
   const { triggerHaptic } = useTelegram();
   const [isPlaying, setIsPlaying] = useState(true);
   const [completedSets, setCompletedSets] = useState([]);
-  const [currentRep, setCurrentRep] = useState(0);
+  
+  // Local rest timer state
+  const [restTimeLeft, setRestTimeLeft] = useState(0);
+  const timerRef = useRef(null);
 
   useEffect(() => {
     // Reset state when exercise changes
     setCompletedSets([]);
-    setCurrentRep(0);
     setIsPlaying(true);
+    setRestTimeLeft(0);
+    if (timerRef.current) clearInterval(timerRef.current);
   }, [workout?.id]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
+
+  const formatTime = (secs) => {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
+  const startLocalRestTimer = (seconds) => {
+    setRestTimeLeft(seconds);
+    if (timerRef.current) clearInterval(timerRef.current);
+    
+    timerRef.current = setInterval(() => {
+      setRestTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current);
+          triggerHaptic('success');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
 
   if (!workout) return null;
 
   const totalSets = typeof workout.defaultSets === 'number' ? workout.defaultSets : 4;
-  const isFinished = completedSets.length >= totalSets;
 
   const handleToggleSet = (index) => {
     triggerHaptic('medium');
@@ -29,24 +59,20 @@ export function ExerciseCard({ workout, onStartRestTimer }) {
       const nextSets = [...completedSets, index];
       setCompletedSets(nextSets);
 
-      // Trigger confetti celebration on full completion
       if (nextSets.length >= totalSets) {
         triggerHaptic('success');
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+        setRestTimeLeft(0);
+        if (timerRef.current) clearInterval(timerRef.current);
       } else {
-        // Auto prompt rest timer
-        onStartRestTimer?.(workout.restSeconds || 60);
+        // Start local rest timer right here inside the card
+        startLocalRestTimer(workout.restSeconds || 60);
       }
     }
   };
 
   return (
     <div className="w-full max-w-md mx-auto space-y-4 pb-12">
-      {/* Exercise Title Header matching sketch ("наименование") */}
+      {/* Exercise Title Header */}
       <div className="text-center pt-2">
         <span className="text-[11px] font-bold uppercase tracking-wider text-blue-400">
           Упражнение • {workout.level}
@@ -56,17 +82,14 @@ export function ExerciseCard({ workout, onStartRestTimer }) {
         </h2>
       </div>
 
-      {/* Main Video / Photo Box matching sketch ("фото или видео тренировок") */}
+      {/* Main Video / Photo Box */}
       <div className="relative rounded-3xl overflow-hidden glass-panel border border-white/15 shadow-2xl group">
-        {/* Animated Visualizer Media Frame */}
         <div
           className="w-full h-64 relative flex flex-col items-center justify-center p-6 transition-all duration-300"
           style={{ background: workout.imageBg || 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}
         >
-          {/* Overlay grid lines for tech look */}
           <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none" />
 
-          {/* Animated Pose Visualizer */}
           <div className="relative z-10 flex flex-col items-center justify-center text-white">
             <div className={`p-5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl mb-3 ${isPlaying ? 'animate-pulse' : ''}`}>
               <Dumbbell className={`w-14 h-14 text-white transition-transform duration-500 ${isPlaying ? 'rotate-12 scale-110' : ''}`} />
@@ -78,26 +101,22 @@ export function ExerciseCard({ workout, onStartRestTimer }) {
             </span>
           </div>
 
-          {/* Play/Pause Controller Floating Button */}
           <button
             onClick={() => {
               triggerHaptic('light');
               setIsPlaying(!isPlaying);
             }}
             className="absolute bottom-4 right-4 p-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white shadow-lg active:scale-95 transition-all"
-            aria-label="Play or Pause demo video"
           >
             {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-white" />}
           </button>
 
-          {/* Video badge top left */}
           <div className="absolute top-4 left-4 px-3 py-1 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 text-xs font-semibold text-white flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
             <span>HD ВИДЕО</span>
           </div>
         </div>
 
-        {/* Video Timeline Bar */}
         <div className="w-full bg-slate-950/80 h-1.5 relative overflow-hidden">
           <div
             className={`h-full bg-gradient-to-r from-blue-500 to-indigo-400 transition-all duration-300 ${isPlaying ? 'w-full animate-pulse' : 'w-1/2'}`}
@@ -135,7 +154,7 @@ export function ExerciseCard({ workout, onStartRestTimer }) {
         </div>
       </div>
 
-      {/* Interactive Sets Checklist matching lines under box in sketch */}
+      {/* Interactive Sets Checklist */}
       <div className="glass-panel p-4 rounded-3xl border border-white/10 space-y-3">
         <div className="flex justify-between items-center px-1">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
@@ -168,24 +187,47 @@ export function ExerciseCard({ workout, onStartRestTimer }) {
                 {isDone ? (
                   <Check className="w-4 h-4 text-emerald-400" />
                 ) : (
-                  <span className="text-[11px] text-slate-400">{workout.defaultReps} повторов</span>
+                  <span className="text-[11px] text-slate-400">{workout.defaultReps} повт.</span>
                 )}
               </button>
             );
           })}
         </div>
 
-        {/* Action Button: Start Rest Timer */}
-        <button
-          onClick={() => {
-            triggerHaptic('medium');
-            onStartRestTimer?.(workout.restSeconds || 60);
-          }}
-          className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-600/25 flex items-center justify-center gap-2 border border-white/10 active:scale-[0.98] transition-all"
-        >
-          <Clock className="w-4 h-4" />
-          <span>Запустить таймер отдыха ({workout.restSeconds} с)</span>
-        </button>
+        {/* Local Rest Timer inside ExerciseCard */}
+        <div className="pt-2">
+          {restTimeLeft > 0 ? (
+            <div className="w-full p-4 rounded-2xl bg-blue-600/10 border border-blue-500/30 text-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-blue-500/5 animate-pulse" />
+              <div className="relative z-10 flex flex-col items-center">
+                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider mb-1">Время отдыха</span>
+                <span className="text-4xl font-extrabold text-white font-mono tracking-tighter">
+                  {formatTime(restTimeLeft)}
+                </span>
+                <button 
+                  onClick={() => {
+                    setRestTimeLeft(0);
+                    if (timerRef.current) clearInterval(timerRef.current);
+                  }}
+                  className="mt-3 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] text-slate-400 hover:text-slate-200 active:scale-95 transition-all"
+                >
+                  Пропустить отдых
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => {
+                triggerHaptic('medium');
+                startLocalRestTimer(workout.restSeconds || 60);
+              }}
+              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-600/25 flex items-center justify-center gap-2 border border-white/10 active:scale-[0.98] transition-all"
+            >
+              <Clock className="w-4 h-4" />
+              <span>Таймер отдыха ({workout.restSeconds} с)</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Description & Execution Steps */}

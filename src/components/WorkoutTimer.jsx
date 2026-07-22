@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, Volume2, Flame, Bell, Zap, Trophy } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { useTelegram } from '../hooks/useTelegram';
 
 export function WorkoutTimer({ initialSeconds = 60, timerTrigger, onTimerComplete }) {
@@ -58,10 +57,9 @@ export function WorkoutTimer({ initialSeconds = 60, timerTrigger, onTimerComplet
 
             if (mode === 'rest') {
               setIsActive(false);
-              confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
               setTimeout(() => {
                 onTimerComplete?.();
-              }, 1500); // 1.5s delay so user sees confetti before tab switches
+              }, 1500); // 1.5s delay before tab switches
               return 0;
             } else if (mode === 'tabata') {
               if (tabataPhase === 'work') {
@@ -74,7 +72,6 @@ export function WorkoutTimer({ initialSeconds = 60, timerTrigger, onTimerComplet
                 if (tabataRound >= 8) {
                   // Finish Tabata!
                   setIsActive(false);
-                  confetti({ particleCount: 100, spread: 80 });
                   return 0;
                 } else {
                   setTabataRound((r) => r + 1);
