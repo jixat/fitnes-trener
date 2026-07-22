@@ -20,6 +20,7 @@ export default function App() {
   const [selectedExercise, setSelectedExercise] = useState(WORKOUTS_DATA[0]);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [restTimerSec, setRestTimerSec] = useState(60);
+  const [timerTrigger, setTimerTrigger] = useState(0);
 
   const getHeaderTitle = () => {
     if (activeTab === 'workouts') {
@@ -45,6 +46,7 @@ export default function App() {
 
   const handleStartRestTimer = (seconds) => {
     setRestTimerSec(seconds || 60);
+    setTimerTrigger(Date.now()); // Force timer restart
     setActiveTab('timer');
   };
 
@@ -116,53 +118,58 @@ export default function App() {
 
       {/* Main Content Router View */}
       <main className="flex-1 px-4 pt-4 max-w-md mx-auto w-full">
-        {activeTab === 'workouts' && (
-          <div>
-            {/* View Switcher Bar (Back button) */}
-            {currentView !== 'list' && (
-              <div className="flex items-center justify-between mb-4">
-                <button
-                  onClick={() => {
-                    triggerHaptic('light');
-                    if (currentView === 'exercise' && selectedPlan) {
-                      // If we came from a plan, go back to plan. Otherwise go to list.
-                      setCurrentView('list'); // Keep it simple for now, go back to list
-                    } else {
-                      setCurrentView('list');
-                    }
-                  }}
-                  className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 px-3 py-1.5 rounded-xl border border-blue-500/20 active:scale-95 transition-all"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5" /> К списку
-                </button>
-              </div>
-            )}
+        <div className={activeTab === 'workouts' ? 'block' : 'hidden'}>
+          {/* View Switcher Bar (Back button) */}
+          {currentView !== 'list' && (
+            <div className="flex items-center justify-between mb-4">
+              <button
+                onClick={() => {
+                  triggerHaptic('light');
+                  if (currentView === 'exercise' && selectedPlan) {
+                    setCurrentView('list'); 
+                  } else {
+                    setCurrentView('list');
+                  }
+                }}
+                className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 px-3 py-1.5 rounded-xl border border-blue-500/20 active:scale-95 transition-all"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" /> К списку
+              </button>
+            </div>
+          )}
 
-            {currentView === 'list' && (
-              <WorkoutsList 
-                onSelectExercise={handleSelectExercise} 
-                onSelectPlan={handleSelectPlan}
-              />
-            )}
-            
-            {currentView === 'exercise' && (
-              <ExerciseCard
-                workout={selectedExercise}
-                onStartRestTimer={handleStartRestTimer}
-              />
-            )}
+          {currentView === 'list' && (
+            <WorkoutsList 
+              onSelectExercise={handleSelectExercise} 
+              onSelectPlan={handleSelectPlan}
+            />
+          )}
+          
+          {currentView === 'exercise' && (
+            <ExerciseCard
+              workout={selectedExercise}
+              onStartRestTimer={handleStartRestTimer}
+            />
+          )}
 
-            {currentView === 'plan' && renderPlanView()}
-          </div>
-        )}
+          {currentView === 'plan' && renderPlanView()}
+        </div>
 
-        {activeTab === 'timer' && (
-          <WorkoutTimer initialSeconds={restTimerSec} />
-        )}
+        <div className={activeTab === 'timer' ? 'block' : 'hidden'}>
+          <WorkoutTimer 
+            initialSeconds={restTimerSec} 
+            timerTrigger={timerTrigger}
+            onTimerComplete={() => setActiveTab('workouts')}
+          />
+        </div>
 
-        {activeTab === 'ai' && <AICoachChat />}
+        <div className={activeTab === 'ai' ? 'block' : 'hidden'}>
+          <AICoachChat />
+        </div>
 
-        {activeTab === 'calculator' && <CalorieCalculator />}
+        <div className={activeTab === 'calculator' ? 'block' : 'hidden'}>
+          <CalorieCalculator />
+        </div>
       </main>
 
       {/* Bottom Sticky Mobile Navigation Bar */}

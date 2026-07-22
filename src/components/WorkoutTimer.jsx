@@ -3,7 +3,7 @@ import { Play, Pause, RotateCcw, Volume2, Flame, Bell, Zap, Trophy } from 'lucid
 import confetti from 'canvas-confetti';
 import { useTelegram } from '../hooks/useTelegram';
 
-export function WorkoutTimer({ initialSeconds = 60 }) {
+export function WorkoutTimer({ initialSeconds = 60, timerTrigger, onTimerComplete }) {
   const { triggerHaptic } = useTelegram();
   const [mode, setMode] = useState('rest'); // 'rest' or 'tabata'
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
@@ -41,8 +41,11 @@ export function WorkoutTimer({ initialSeconds = 60 }) {
     if (initialSeconds && mode === 'rest') {
       setSecondsLeft(initialSeconds);
       setTotalSeconds(initialSeconds);
+      if (timerTrigger) {
+        setIsActive(true);
+      }
     }
-  }, [initialSeconds]);
+  }, [initialSeconds, timerTrigger]);
 
   useEffect(() => {
     if (isActive) {
@@ -56,6 +59,9 @@ export function WorkoutTimer({ initialSeconds = 60 }) {
             if (mode === 'rest') {
               setIsActive(false);
               confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+              setTimeout(() => {
+                onTimerComplete?.();
+              }, 1500); // 1.5s delay so user sees confetti before tab switches
               return 0;
             } else if (mode === 'tabata') {
               if (tabataPhase === 'work') {
