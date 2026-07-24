@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Flame, Clock, Dumbbell, ChevronRight, Filter, Target, Activity } from 'lucide-react';
+import { Search, Flame, Clock, LayoutGrid, ChevronRight, Filter, Target, Activity } from 'lucide-react';
 import { WORKOUTS_DATA, CATEGORIES, MUSCLE_GROUPS, WORKOUT_PLANS } from '../data/workoutsData';
 import { useTelegram } from '../hooks/useTelegram';
 
@@ -46,7 +46,7 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
               : 'text-[#8b949e] hover:text-[#c9d1d9] border border-transparent'
           }`}
         >
-          <Dumbbell className="w-4 h-4" strokeWidth={1.5} /> Упражнения
+          <LayoutGrid className="w-4 h-4" strokeWidth={1.5} /> Упражнения
         </button>
         <button
           onClick={() => {
@@ -156,7 +156,7 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
                     <div
                       className="flex items-center justify-center text-[#8b949e] shrink-0 w-8"
                     >
-                      <Dumbbell className="w-5 h-5 group-hover:text-[#58a6ff] transition-colors" strokeWidth={1.5} />
+                      <LayoutGrid className="w-5 h-5 group-hover:text-[#58a6ff] transition-colors" strokeWidth={1.5} />
                     </div>
 
                     <div className="space-y-1 min-w-0">

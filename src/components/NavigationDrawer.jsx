@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Dumbbell, Timer, Bot, Calculator, X, ChevronRight, Sparkles, Trophy, Zap } from 'lucide-react';
+import { Activity, Clock, BrainCircuit, Scale, X, ChevronRight, Sparkles, Trophy } from 'lucide-react';
 import { useTelegram } from '../hooks/useTelegram';
 
 export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
@@ -11,7 +11,7 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
       id: 'workouts',
       title: 'тренировки',
       subtitle: 'Каталог и упражнения',
-      icon: Dumbbell,
+      icon: Activity,
       color: 'from-blue-500 to-indigo-600',
       badge: 'Каталог'
     },
@@ -19,7 +19,7 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
       id: 'timer',
       title: 'таймер',
       subtitle: 'Отдых и Табата',
-      icon: Timer,
+      icon: Clock,
       color: 'from-amber-500 to-orange-600',
       badge: 'Интервал'
     },
@@ -27,7 +27,7 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
       id: 'ai',
       title: 'ии помощник',
       subtitle: 'Персональный тренер 24/7',
-      icon: Bot,
+      icon: BrainCircuit,
       color: 'from-emerald-500 to-teal-600',
       badge: 'AI Smart'
     },
@@ -35,7 +35,7 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
       id: 'calculator',
       title: 'калькулятор калорий',
       subtitle: 'Расчет BMR, TDEE и БЖУ',
-      icon: Calculator,
+      icon: Scale,
       color: 'from-purple-500 to-fuchsia-600',
       badge: 'Питание'
     }

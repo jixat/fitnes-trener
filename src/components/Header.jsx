@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Dumbbell } from 'lucide-react';
+import { Menu, Activity } from 'lucide-react';
 import { useTelegram } from '../hooks/useTelegram';
 
 export function Header({ onOpenDrawer, title, activeTab }) {
@@ -24,7 +24,7 @@ export function Header({ onOpenDrawer, title, activeTab }) {
       {/* Center: Dynamic title */}
       <div className="flex flex-col items-center justify-center text-center px-2 flex-1 mx-2">
         <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[#8b949e]">
-          <Dumbbell className="w-3 h-3" strokeWidth={1.5} />
+          <Activity className="w-3 h-3" strokeWidth={1.5} />
           <span>Фитнес Тренер</span>
         </div>
         <h1 className="text-sm font-bold text-white truncate max-w-[200px] mt-0.5">
