@@ -12,7 +12,7 @@ export function CalorieCalculator() {
   const [activity, setActivity] = useState(1.375); // 1.2, 1.375, 1.55, 1.725
   const [goal, setGoal] = useState('maintain'); // 'loss', 'maintain', 'gain'
 
-  const [waterGlasses, setWaterGlasses] = useState(4); // max 10 glasses (250ml each)
+  const [waterGlasses, setWaterGlasses] = useState(0); // max 10 glasses (250ml each)
 
   // Mifflin-St Jeor BMR Equation
   const bmr =
@@ -32,12 +32,7 @@ export function CalorieCalculator() {
   const fatGrams = Math.round((targetCalories * 0.25) / 9);
   const carbsGrams = Math.round((targetCalories - proteinGrams * 4 - fatGrams * 9) / 4);
 
-  const handleAddWater = () => {
-    if (waterGlasses < 10) {
-      triggerHaptic('light');
-      setWaterGlasses(waterGlasses + 1);
-    }
-  };
+  const carbsGrams = Math.round((targetCalories - proteinGrams * 4 - fatGrams * 9) / 4);
 
   return (
     <div className="w-full max-w-md mx-auto space-y-5 pb-12">
@@ -52,16 +47,16 @@ export function CalorieCalculator() {
       </div>
 
       {/* Input Parameters Form */}
-      <div className="glass-panel p-5 rounded-3xl border border-white/10 space-y-4">
+      <div className="bg-[#161b22] p-5 rounded-md border border-[#30363d] space-y-4">
         {/* Gender selector */}
-        <div className="flex p-1 rounded-2xl bg-slate-900/60 border border-white/10">
+        <div className="flex p-1 rounded-md bg-[#0d1117] border border-[#30363d]">
           <button
             onClick={() => {
               triggerHaptic('light');
               setGender('male');
             }}
-            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
-              gender === 'male' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400'
+            className={`flex-1 py-2 rounded-md text-xs font-bold transition-all ${
+              gender === 'male' ? 'bg-[#21262d] text-white shadow-sm border border-[#30363d]' : 'text-[#8b949e] border border-transparent'
             }`}
           >
             👨 Мужской
@@ -71,8 +66,8 @@ export function CalorieCalculator() {
               triggerHaptic('light');
               setGender('female');
             }}
-            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
-              gender === 'female' ? 'bg-pink-600 text-white shadow-md' : 'text-slate-400'
+            className={`flex-1 py-2 rounded-md text-xs font-bold transition-all ${
+              gender === 'female' ? 'bg-[#21262d] text-white shadow-sm border border-[#30363d]' : 'text-[#8b949e] border border-transparent'
             }`}
           >
             👩 Женский
@@ -129,7 +124,7 @@ export function CalorieCalculator() {
 
         {/* Goal Selector */}
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-slate-300">Цель тренировок</label>
+          <label className="text-xs font-bold text-[#8b949e]">Цель тренировок</label>
           <div className="grid grid-cols-3 gap-2">
             {[
               { id: 'loss', label: 'Похудение (-15%)', color: 'from-amber-600 to-orange-600' },
@@ -142,10 +137,10 @@ export function CalorieCalculator() {
                   triggerHaptic('light');
                   setGoal(item.id);
                 }}
-                className={`p-2.5 rounded-2xl text-[11px] font-bold border transition-all ${
+                className={`p-2.5 rounded-md text-[10px] font-bold border transition-all ${
                   goal === item.id
-                    ? `bg-gradient-to-tr ${item.color} text-white border-white/30 shadow-md`
-                    : 'bg-slate-800/40 text-slate-400 border-white/5'
+                    ? `bg-[#21262d] text-[#c9d1d9] border-[#58a6ff]`
+                    : 'bg-[#0d1117] text-[#8b949e] border-[#30363d] hover:bg-[#21262d]'
                 }`}
               >
                 {item.label}
@@ -156,50 +151,50 @@ export function CalorieCalculator() {
       </div>
 
       {/* Target Result Dashboard Card */}
-      <div className="glass-panel p-6 rounded-3xl border border-purple-500/30 text-center relative overflow-hidden bg-gradient-to-b from-purple-900/20 to-slate-900/40 shadow-2xl">
-        <div className="flex justify-center mb-1 text-purple-400">
-          <Flame className="w-8 h-8 animate-bounce" />
+      <div className="bg-[#161b22] p-6 rounded-md border border-[#30363d] text-center relative overflow-hidden">
+        <div className="flex justify-center mb-1 text-[#e3b341]">
+          <Flame className="w-6 h-6 animate-pulse" />
         </div>
-        <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+        <span className="text-[10px] font-bold text-[#8b949e] uppercase tracking-wider">
           Суточная норма калорий
         </span>
-        <div className="text-4xl font-black text-white tracking-tight mt-1">
-          {targetCalories} <span className="text-base font-bold text-purple-400">ккал/день</span>
+        <div className="text-3xl font-bold text-white tracking-tight mt-1">
+          {targetCalories} <span className="text-sm font-bold text-[#8b949e]">ккал/день</span>
         </div>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-[10px] text-[#8b949e] mt-1">
           Базовый метаболизм (BMR): {Math.round(bmr)} ккал
         </p>
 
         {/* Macros Grid */}
-        <div className="grid grid-cols-3 gap-2.5 mt-5 pt-4 border-t border-white/10">
-          <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-center">
-            <div className="text-[10px] font-bold text-blue-400 uppercase">БЕЛКИ</div>
-            <div className="text-base font-extrabold text-white mt-0.5">{proteinGrams} г</div>
-            <div className="text-[10px] text-slate-400">{proteinGrams * 4} ккал</div>
+        <div className="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-[#30363d]">
+          <div className="p-2.5 rounded-md bg-[#21262d] border border-[#30363d] text-center">
+            <div className="text-[9px] font-bold text-[#58a6ff] uppercase">БЕЛКИ</div>
+            <div className="text-sm font-bold text-white mt-0.5">{proteinGrams} г</div>
+            <div className="text-[9px] text-[#8b949e]">{proteinGrams * 4} ккал</div>
           </div>
 
-          <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-center">
-            <div className="text-[10px] font-bold text-amber-400 uppercase">ЖИРЫ</div>
-            <div className="text-base font-extrabold text-white mt-0.5">{fatGrams} г</div>
-            <div className="text-[10px] text-slate-400">{fatGrams * 9} ккал</div>
+          <div className="p-2.5 rounded-md bg-[#21262d] border border-[#30363d] text-center">
+            <div className="text-[9px] font-bold text-[#e3b341] uppercase">ЖИРЫ</div>
+            <div className="text-sm font-bold text-white mt-0.5">{fatGrams} г</div>
+            <div className="text-[9px] text-[#8b949e]">{fatGrams * 9} ккал</div>
           </div>
 
-          <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
-            <div className="text-[10px] font-bold text-emerald-400 uppercase">УГЛЕВОДЫ</div>
-            <div className="text-base font-extrabold text-white mt-0.5">{carbsGrams} г</div>
-            <div className="text-[10px] text-slate-400">{carbsGrams * 4} ккал</div>
+          <div className="p-2.5 rounded-md bg-[#21262d] border border-[#30363d] text-center">
+            <div className="text-[9px] font-bold text-[#3fb950] uppercase">УГЛЕВОДЫ</div>
+            <div className="text-sm font-bold text-white mt-0.5">{carbsGrams} г</div>
+            <div className="text-[9px] text-[#8b949e]">{carbsGrams * 4} ккал</div>
           </div>
         </div>
       </div>
 
       {/* Water Tracker Card */}
-      <div className="glass-panel p-5 rounded-3xl border border-white/10 space-y-3">
+      <div className="bg-[#161b22] p-5 rounded-md border border-[#30363d] space-y-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 text-xs font-bold text-white">
-            <Droplets className="w-4 h-4 text-blue-400" />
-            <span>Трекер воды (250мл / стакан)</span>
+            <Droplets className="w-4 h-4 text-[#58a6ff]" />
+            <span>Трекер воды (250мл)</span>
           </div>
-          <span className="text-xs font-bold text-blue-400">
+          <span className="text-[10px] font-bold text-[#8b949e]">
             {waterGlasses * 250} / 2500 мл
           </span>
         </div>
@@ -212,15 +207,19 @@ export function CalorieCalculator() {
                 key={idx}
                 onClick={() => {
                   triggerHaptic('light');
-                  setWaterGlasses(idx + 1);
+                  if (waterGlasses === idx + 1) {
+                    setWaterGlasses(idx); // Toggle off if clicking the current max glass
+                  } else {
+                    setWaterGlasses(idx + 1); // Fill up to this glass
+                  }
                 }}
-                className={`py-2 rounded-xl text-xs font-bold flex flex-col items-center justify-center gap-1 transition-all border ${
+                className={`py-2 rounded-md text-xs font-bold flex flex-col items-center justify-center gap-1 transition-all border ${
                   isFull
-                    ? 'bg-blue-600/40 border-blue-400 text-blue-200'
-                    : 'bg-slate-800/40 border-white/5 text-slate-600'
+                    ? 'bg-[#1f6feb]/20 border-[#1f6feb] text-[#58a6ff]'
+                    : 'bg-[#0d1117] border-[#30363d] text-[#8b949e] hover:bg-[#21262d]'
                 }`}
               >
-                <Droplets className={`w-4 h-4 ${isFull ? 'fill-blue-400 text-blue-400' : ''}`} />
+                <Droplets className={`w-3.5 h-3.5 ${isFull ? 'fill-current' : ''}`} />
                 <span className="text-[9px]">{idx + 1}</span>
               </button>
             );
