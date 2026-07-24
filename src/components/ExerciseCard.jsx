@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Check, Clock, Flame, Dumbbell, ShieldCheck, Zap } from 'lucide-react';
+import { Play, Pause, Check, Clock, Flame, Activity, ShieldCheck, Zap } from 'lucide-react';
 import { useTelegram } from '../hooks/useTelegram';
 
 export function ExerciseCard({ workout }) {
@@ -91,11 +91,11 @@ export function ExerciseCard({ workout }) {
 
           <div className="relative z-10 flex flex-col items-center justify-center text-[#c9d1d9]">
             <div className={`p-4 rounded-full bg-[#21262d] border border-[#30363d] mb-3 ${isPlaying ? 'animate-pulse' : ''}`}>
-              <Dumbbell className={`w-10 h-10 text-[#c9d1d9] transition-transform duration-500 ${isPlaying ? 'rotate-12 scale-110' : ''}`} />
+              <Activity className={`w-10 h-10 text-[#c9d1d9] transition-transform duration-500 ${isPlaying ? 'rotate-12 scale-110' : ''}`} strokeWidth={1.5} />
             </div>
 
             <span className="text-[10px] font-bold px-3 py-1 rounded-md bg-[#21262d] border border-[#30363d] text-[#8b949e] flex items-center gap-1.5">
-              <Zap className="w-3 h-3 text-[#8b949e]" />
+              <Zap className="w-3 h-3 text-[#8b949e]" strokeWidth={1.5} />
               {isPlaying ? 'Анимация техники (Воспроизведение)' : 'Пауза'}
             </span>
           </div>
@@ -107,7 +107,7 @@ export function ExerciseCard({ workout }) {
             }}
             className="absolute bottom-4 right-4 p-2 rounded-md bg-[#21262d] hover:bg-[#30363d] border border-[#30363d] text-[#c9d1d9] active:scale-95 transition-all"
           >
-            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+            {isPlaying ? <Pause className="w-4 h-4" strokeWidth={1.5} /> : <Play className="w-4 h-4 fill-current" strokeWidth={1.5} />}
           </button>
 
           <div className="absolute top-4 left-4 px-2 py-1 rounded-md bg-[#21262d] border border-[#30363d] text-[10px] font-bold text-[#8b949e] flex items-center gap-1.5">
@@ -184,7 +184,7 @@ export function ExerciseCard({ workout }) {
                   <span className="text-xs font-bold">Подход {idx + 1}</span>
                 </div>
                 {isDone ? (
-                  <Check className="w-4 h-4 text-[#3fb950]" />
+                  <Check className="w-4 h-4 text-[#3fb950]" strokeWidth={1.5} />
                 ) : (
                   <span className="text-[10px] text-[#8b949e]">{workout.defaultReps} повт.</span>
                 )}
@@ -221,7 +221,7 @@ export function ExerciseCard({ workout }) {
               }}
               className="w-full py-2.5 rounded-md bg-[#238636] hover:bg-[#2ea043] text-white font-bold text-xs border border-[#2ea043] flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
             >
-              <Clock className="w-3.5 h-3.5" />
+              <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />
               <span>Таймер отдыха ({workout.restSeconds} с)</span>
             </button>
           )}
@@ -231,7 +231,7 @@ export function ExerciseCard({ workout }) {
       {/* Description & Execution Steps */}
       <div className="bg-[#161b22] p-5 rounded-md border border-[#30363d] space-y-3">
         <h3 className="text-sm font-bold text-white flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-[#8b949e]" />
+          <ShieldCheck className="w-4 h-4 text-[#8b949e]" strokeWidth={1.5} />
           Техника выполнения
         </h3>
         <p className="text-xs text-[#c9d1d9] leading-relaxed">
@@ -251,7 +251,7 @@ export function ExerciseCard({ workout }) {
 
         {workout.proTips && (
           <div className="p-3 rounded-md bg-[#21262d] border border-[#30363d] text-[#c9d1d9] text-xs flex items-start gap-2">
-            <Zap className="w-4 h-4 text-[#e3b341] shrink-0 mt-0.5" />
+            <Zap className="w-4 h-4 text-[#e3b341] shrink-0 mt-0.5" strokeWidth={1.5} />
             <div>
               <strong className="font-bold text-white">Совет тренера:</strong> {workout.proTips}
             </div>

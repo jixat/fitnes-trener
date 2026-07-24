@@ -8,7 +8,7 @@ import { AICoachChat } from './components/AICoachChat';
 import { CalorieCalculator } from './components/CalorieCalculator';
 import { WORKOUTS_DATA } from './data/workoutsData';
 import { useTelegram } from './hooks/useTelegram';
-import { Dumbbell, Timer, Bot, Calculator, ArrowLeft, PlayCircle } from 'lucide-react';
+import { Activity, Clock, BrainCircuit, Scale, ArrowLeft, PlayCircle } from 'lucide-react';
 
 export default function App() {
   const { triggerHaptic } = useTelegram();
@@ -84,7 +84,7 @@ export default function App() {
                   onClick={() => handleSelectExercise(exercise)}
                   className="p-2 bg-white/5 rounded-xl hover:bg-white/10 transition-colors text-slate-300"
                 >
-                  <PlayCircle className="w-5 h-5" />
+                  <PlayCircle className="w-5 h-5" strokeWidth={1.5} />
                 </button>
               </div>
             );
@@ -133,7 +133,7 @@ export default function App() {
                 }}
                 className="text-xs font-bold text-[#58a6ff] hover:text-[#79c0ff] flex items-center gap-1 bg-transparent px-3 py-1.5 rounded-md border border-[#30363d] active:scale-95 transition-all"
               >
-                <ArrowLeft className="w-3.5 h-3.5" /> Назад
+                <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} /> Назад
               </button>
             </div>
           )}
@@ -175,10 +175,10 @@ export default function App() {
       {/* Bottom Sticky Mobile Navigation Bar */}
       <nav className="fixed bottom-0 left-0 right-0 bg-[#161b22] border-t border-[#30363d] z-30 px-3 py-2 flex justify-around items-center max-w-md mx-auto">
         {[
-          { id: 'workouts', label: 'Тренировки', icon: Dumbbell },
-          { id: 'timer', label: 'Таймер', icon: Timer },
-          { id: 'ai', label: 'ИИ Тренер', icon: Bot },
-          { id: 'calculator', label: 'Калории', icon: Calculator }
+          { id: 'workouts', label: 'Тренировки', icon: Activity },
+          { id: 'timer', label: 'Таймер', icon: Clock },
+          { id: 'ai', label: 'ИИ Тренер', icon: BrainCircuit },
+          { id: 'calculator', label: 'Калории', icon: Scale }
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -195,7 +195,7 @@ export default function App() {
                   : 'text-[#8b949e] hover:text-[#c9d1d9]'
               }`}
             >
-              <Icon className="w-5 h-5 mb-0.5" />
+              <Icon className="w-5 h-5 mb-0.5" strokeWidth={1.5} />
               <span className="text-[10px] tracking-tight">{tab.label}</span>
             </button>
           );
