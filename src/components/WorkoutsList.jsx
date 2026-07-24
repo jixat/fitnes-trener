@@ -34,16 +34,16 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
   return (
     <div className="w-full max-w-md mx-auto space-y-4 pb-12">
       {/* Tabs Selector */}
-      <div className="flex p-1 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+      <div className="flex p-1 bg-[#161b22] border border-[#30363d] rounded-md">
         <button
           onClick={() => {
             triggerHaptic('light');
             setActiveTab('exercises');
           }}
-          className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
+          className={`flex-1 py-2 rounded-md text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
             activeTab === 'exercises'
-              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-[#21262d] text-white border border-[#30363d] shadow-sm'
+              : 'text-[#8b949e] hover:text-[#c9d1d9] border border-transparent'
           }`}
         >
           <Dumbbell className="w-4 h-4" /> Упражнения
@@ -53,10 +53,10 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
             triggerHaptic('light');
             setActiveTab('plans');
           }}
-          className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
+          className={`flex-1 py-2 rounded-md text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 ${
             activeTab === 'plans'
-              ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-lg'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-[#21262d] text-white border border-[#30363d] shadow-sm'
+              : 'text-[#8b949e] hover:text-[#c9d1d9] border border-transparent'
           }`}
         >
           <Activity className="w-4 h-4" /> Планы
@@ -65,13 +65,13 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
 
       {/* Search Input */}
       <div className="relative">
-        <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+        <Search className="w-4 h-4 text-[#8b949e] absolute left-3.5 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={activeTab === 'exercises' ? "Поиск упражнений..." : "Поиск планов..."}
-          className="w-full pl-10 pr-4 py-3 rounded-2xl glass-panel text-sm text-white placeholder-slate-400 border border-white/10 focus:outline-none focus:border-blue-500/50"
+          className="w-full pl-10 pr-4 py-2.5 rounded-md bg-[#0d1117] text-sm text-[#c9d1d9] placeholder-[#8b949e] border border-[#30363d] focus:outline-none focus:border-[#58a6ff]"
         />
       </div>
 
@@ -88,10 +88,10 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
                     triggerHaptic('light');
                     setSelectedCategory(cat.id);
                   }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-200 border flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-md text-[11px] font-bold whitespace-nowrap transition-all duration-200 border flex items-center gap-1.5 ${
                     isActive
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-blue-400 shadow-md'
-                      : 'glass-panel text-slate-300 border-white/10 hover:bg-slate-800'
+                      ? 'bg-[#1f6feb] text-white border-[#1f6feb]'
+                      : 'bg-[#21262d] text-[#c9d1d9] border-[#30363d] hover:bg-[#30363d]'
                   }`}
                 >
                   <span>{cat.icon}</span>
@@ -103,9 +103,9 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
 
           {/* Muscle Groups Slider */}
           <div className="flex gap-2 overflow-x-auto pb-2 pt-1 no-scrollbar scroll-smooth">
-            <div className="flex items-center gap-1 text-slate-400 pr-2 border-r border-white/10 shrink-0">
-              <Target className="w-4 h-4" />
-              <span className="text-[10px] uppercase font-bold tracking-wider">Мышцы</span>
+            <div className="flex items-center gap-1 text-[#8b949e] pr-2 border-r border-[#30363d] shrink-0">
+              <Target className="w-3.5 h-3.5" />
+              <span className="text-[9px] uppercase font-bold tracking-wider">Мышцы</span>
             </div>
             {MUSCLE_GROUPS.map((muscle) => {
               const isActive = selectedMuscle === muscle.id;
@@ -116,10 +116,10 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
                     triggerHaptic('light');
                     setSelectedMuscle(muscle.id);
                   }}
-                  className={`px-3 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-all duration-200 border ${
+                  className={`px-2.5 py-1 rounded-md text-[10px] font-bold whitespace-nowrap transition-all duration-200 border ${
                     isActive
-                      ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-sm'
-                      : 'bg-white/5 text-slate-400 border-transparent hover:bg-white/10'
+                      ? 'bg-[#1f6feb]/20 text-[#58a6ff] border-[#1f6feb]/40'
+                      : 'bg-[#0d1117] text-[#8b949e] border-[#30363d] hover:bg-[#21262d]'
                   }`}
                 >
                   {muscle.label}
@@ -131,16 +131,16 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
           {/* Workouts List */}
           <div className="space-y-3">
             <div className="flex items-center justify-between px-1">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8b949e]">
                 Доступные упражнения ({filteredWorkouts.length})
               </span>
             </div>
 
             {filteredWorkouts.length === 0 ? (
-              <div className="glass-panel p-8 text-center rounded-3xl border border-white/10 space-y-2">
-                <Filter className="w-8 h-8 text-slate-500 mx-auto" />
+              <div className="bg-[#161b22] p-8 text-center rounded-md border border-[#30363d] space-y-2">
+                <Filter className="w-6 h-6 text-[#8b949e] mx-auto" />
                 <div className="text-sm font-bold text-white">Упражнения не найдены</div>
-                <p className="text-xs text-slate-400">Попробуйте изменить категорию или фильтры</p>
+                <p className="text-xs text-[#8b949e]">Попробуйте изменить категорию или фильтры</p>
               </div>
             ) : (
               filteredWorkouts.map((workout) => (
@@ -150,34 +150,33 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
                     triggerHaptic('medium');
                     onSelectExercise(workout);
                   }}
-                  className="w-full glass-card p-4 rounded-3xl text-left border border-white/10 hover:border-blue-500/40 transition-all duration-200 active:scale-[0.98] flex items-center justify-between group"
+                  className="w-full bg-[#161b22] p-3.5 rounded-md text-left border border-[#30363d] hover:border-[#58a6ff] transition-all duration-200 active:scale-[0.98] flex items-center justify-between group"
                 >
-                  <div className="flex items-center gap-3.5 flex-1 pr-2">
+                  <div className="flex items-center gap-3 flex-1 pr-2">
                     <div
-                      className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-bold shadow-md shrink-0"
-                      style={{ background: workout.imageBg || 'linear-gradient(135deg, #2563eb, #1d4ed8)' }}
+                      className="w-10 h-10 rounded-md flex items-center justify-center text-[#c9d1d9] bg-[#21262d] border border-[#30363d] shrink-0"
                     >
-                      <Dumbbell className="w-6 h-6" />
+                      <Dumbbell className="w-5 h-5" />
                     </div>
 
                     <div className="space-y-1 min-w-0">
-                      <h4 className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors truncate">
+                      <h4 className="text-sm font-bold text-[#c9d1d9] group-hover:text-[#58a6ff] transition-colors truncate">
                         {workout.title}
                       </h4>
-                      <div className="flex items-center gap-2 text-xs text-slate-400 flex-wrap">
+                      <div className="flex items-center gap-2 text-[10px] text-[#8b949e] flex-wrap">
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3 text-blue-400" />
+                          <Clock className="w-3 h-3 text-[#8b949e]" />
                           {workout.duration}
                         </span>
                         <span>•</span>
                         <span className="flex items-center gap-1">
-                          <Flame className="w-3 h-3 text-amber-400" />
+                          <Flame className="w-3 h-3 text-[#8b949e]" />
                           {workout.calories}
                         </span>
                       </div>
                       <div className="flex gap-1 flex-wrap pt-0.5">
                         {workout.targetMuscles.slice(0, 2).map((m, idx) => (
-                          <span key={idx} className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-slate-300 border border-white/5">
+                          <span key={idx} className="text-[9px] px-1.5 py-0.5 rounded-sm bg-[#21262d] text-[#8b949e] border border-[#30363d]">
                             {m}
                           </span>
                         ))}
@@ -185,7 +184,7 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
                     </div>
                   </div>
 
-                  <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-transform group-hover:translate-x-1 shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-[#30363d] group-hover:text-[#58a6ff] transition-transform group-hover:translate-x-1 shrink-0" />
                 </button>
               ))
             )}
@@ -196,14 +195,14 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
       {activeTab === 'plans' && (
         <div className="space-y-3 pt-2">
           <div className="flex items-center justify-between px-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8b949e]">
               Готовые программы ({filteredPlans.length})
             </span>
           </div>
 
           {filteredPlans.length === 0 ? (
-            <div className="glass-panel p-8 text-center rounded-3xl border border-white/10 space-y-2">
-              <Filter className="w-8 h-8 text-slate-500 mx-auto" />
+            <div className="bg-[#161b22] p-8 text-center rounded-md border border-[#30363d] space-y-2">
+              <Filter className="w-6 h-6 text-[#8b949e] mx-auto" />
               <div className="text-sm font-bold text-white">Планы не найдены</div>
             </div>
           ) : (
@@ -214,46 +213,40 @@ export function WorkoutsList({ onSelectExercise, onSelectPlan }) {
                   triggerHaptic('medium');
                   onSelectPlan?.(plan);
                 }}
-                className="w-full relative overflow-hidden glass-card p-5 rounded-3xl text-left border border-white/10 hover:border-emerald-500/40 transition-all duration-200 active:scale-[0.98] group"
+                className="w-full relative overflow-hidden bg-[#161b22] p-4 rounded-md text-left border border-[#30363d] hover:border-[#238636] transition-all duration-200 active:scale-[0.98] group"
               >
-                <div 
-                  className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity"
-                  style={{ background: plan.imageBg }}
-                />
-                
                 <div className="relative z-10 space-y-3">
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2 inline-block">
+                      <span className="text-[9px] font-bold px-2 py-0.5 rounded-sm bg-[#21262d] text-[#c9d1d9] border border-[#30363d] mb-2 inline-block">
                         {plan.level}
                       </span>
-                      <h4 className="text-base font-extrabold text-white group-hover:text-emerald-400 transition-colors">
+                      <h4 className="text-sm font-bold text-[#c9d1d9] group-hover:text-[#3fb950] transition-colors">
                         {plan.title}
                       </h4>
                     </div>
                     <div 
-                      className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg shrink-0"
-                      style={{ background: plan.imageBg }}
+                      className="w-8 h-8 rounded-md flex items-center justify-center text-[#c9d1d9] bg-[#21262d] border border-[#30363d] shrink-0"
                     >
-                      <Activity className="w-5 h-5" />
+                      <Activity className="w-4 h-4" />
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-300 leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#8b949e] leading-relaxed line-clamp-2">
                     {plan.description}
                   </p>
 
-                  <div className="flex items-center gap-4 text-xs font-semibold text-slate-400 pt-1 border-t border-white/10">
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-blue-400" />
+                  <div className="flex items-center gap-3 text-[10px] font-bold text-[#8b949e] pt-2 border-t border-[#30363d]">
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-[#8b949e]" />
                       {plan.duration}
                     </span>
-                    <span className="flex items-center gap-1.5">
-                      <Flame className="w-3.5 h-3.5 text-amber-400" />
+                    <span className="flex items-center gap-1">
+                      <Flame className="w-3 h-3 text-[#8b949e]" />
                       {plan.calories}
                     </span>
-                    <span className="flex items-center gap-1.5 ml-auto text-emerald-400 group-hover:translate-x-1 transition-transform">
-                      {plan.exercises.length} упр. <ChevronRight className="w-4 h-4" />
+                    <span className="flex items-center gap-1 ml-auto text-[#8b949e] group-hover:text-[#3fb950] group-hover:translate-x-1 transition-all">
+                      {plan.exercises.length} упр. <ChevronRight className="w-3 h-3" />
                     </span>
                   </div>
                 </div>

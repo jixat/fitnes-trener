@@ -95,7 +95,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-[#0d1117] text-[#c9d1d9] flex flex-col selection:bg-[#238636] selection:text-white">
       {/* Header Bar */}
       <Header
         onOpenDrawer={() => setIsDrawerOpen(true)}
@@ -131,9 +131,9 @@ export default function App() {
                     setCurrentView('list');
                   }
                 }}
-                className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 px-3 py-1.5 rounded-xl border border-blue-500/20 active:scale-95 transition-all"
+                className="text-xs font-bold text-[#58a6ff] hover:text-[#79c0ff] flex items-center gap-1 bg-transparent px-3 py-1.5 rounded-md border border-[#30363d] active:scale-95 transition-all"
               >
-                <ArrowLeft className="w-3.5 h-3.5" /> К списку
+                <ArrowLeft className="w-3.5 h-3.5" /> Назад
               </button>
             </div>
           )}
@@ -173,7 +173,7 @@ export default function App() {
       </main>
 
       {/* Bottom Sticky Mobile Navigation Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 glass-panel border-t border-white/10 z-30 px-3 py-2 flex justify-around items-center max-w-md mx-auto backdrop-blur-2xl">
+      <nav className="fixed bottom-0 left-0 right-0 bg-[#161b22] border-t border-[#30363d] z-30 px-3 py-2 flex justify-around items-center max-w-md mx-auto">
         {[
           { id: 'workouts', label: 'Тренировки', icon: Dumbbell },
           { id: 'timer', label: 'Таймер', icon: Timer },
@@ -189,10 +189,10 @@ export default function App() {
                 triggerHaptic('light');
                 setActiveTab(tab.id);
               }}
-              className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all duration-200 ${
+              className={`flex flex-col items-center justify-center py-1 px-3 rounded-md transition-all duration-200 ${
                 isActive
-                  ? 'text-blue-400 bg-blue-500/15 font-bold scale-105'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'text-[#c9d1d9] bg-[#21262d] font-bold'
+                  : 'text-[#8b949e] hover:text-[#c9d1d9]'
               }`}
             >
               <Icon className="w-5 h-5 mb-0.5" />
