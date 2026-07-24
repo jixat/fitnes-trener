@@ -64,7 +64,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 12,
     restSeconds: 60,
     type: 'video',
-    youtubeId: 'gcNh17Ckjgg',
+    videoPath: '/videos/squats-barbell.mp4',
     demoType: 'squat',
     description: 'Базовое многосуставное упражнение для развития мышц нижней части тела и укрепления коленей.',
     steps: [
@@ -89,7 +89,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 10,
     restSeconds: 60,
     type: 'video',
-    youtubeId: 'rT7DgCr-3pg',
+    videoPath: '/videos/bench-press.mp4',
     demoType: 'bench',
     description: 'Упражнение для проработки грудных мышц с увеличенной амплитудой движения по сравнению со штангой.',
     steps: [
@@ -114,7 +114,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 15,
     restSeconds: 45,
     type: 'video',
-    youtubeId: 'IODxDxX7oi4',
+    videoPath: '/videos/pushups-home.mp4',
     demoType: 'pushup',
     description: 'Классическое упражнение с собственным весом для мышц верха тела.',
     steps: [
@@ -138,7 +138,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 20,
     restSeconds: 45,
     type: 'video',
-    youtubeId: 'mGvzVjuY8SY',
+    videoPath: '/videos/squats-home.mp4',
     demoType: 'squat',
     description: 'Приседания с собственным весом. Отличная база для тренировок дома.',
     steps: [
@@ -163,7 +163,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 12,
     restSeconds: 45,
     type: 'video',
-    youtubeId: 'QOVaHwm-Q6U',
+    videoPath: '/videos/lunges-home.mp4',
     demoType: 'lunge',
     description: 'Отличное упражнение для проработки бедер и координации.',
     steps: [
@@ -187,7 +187,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 20,
     restSeconds: 30,
     type: 'video',
-    youtubeId: 'Xyd_fa5zoEU',
+    videoPath: '/videos/crunch-home.mp4',
     demoType: 'crunch',
     description: 'Базовое упражнение для проработки прямой мышцы живота (кубиков).',
     steps: [
@@ -212,7 +212,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 15,
     restSeconds: 45,
     type: 'video',
-    youtubeId: 'dZgVxmf6jkA',
+    videoPath: '/videos/burpees-cardio.mp4',
     demoType: 'burpee',
     description: 'Интенсивное функциональное упражнение для быстрого сжигания калорий и выносливости.',
     steps: [
@@ -237,7 +237,7 @@ export const WORKOUTS_DATA = [
     defaultReps: '60 сек',
     restSeconds: 30,
     type: 'video',
-    youtubeId: 'pSHjTRCQxIw',
+    videoPath: '/videos/plank-core.mp4',
     demoType: 'plank',
     description: 'Статическое упражнение для укрепления глубоких мышц кора и осанки.',
     steps: [

@@ -87,15 +87,17 @@ export function ExerciseCard({ workout }) {
         <div
           className="w-full h-64 relative flex flex-col items-center justify-center transition-all duration-300 bg-[#0d1117]"
         >
-          {isPlaying && workout.youtubeId ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${workout.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${workout.youtubeId}&controls=0`}
-              title={workout.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="absolute inset-0 w-full h-full object-cover pointer-events-auto"
-            ></iframe>
+          {isPlaying && workout.videoPath ? (
+            <div className="absolute inset-0 w-full h-full z-10 bg-[#0d1117]">
+              <video
+                src={workout.videoPath}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
           ) : (
             <div className="relative z-10 flex flex-col items-center justify-center text-[#c9d1d9] p-6 w-full h-full">
               <div className="absolute inset-0 opacity-10 pointer-events-none" />
