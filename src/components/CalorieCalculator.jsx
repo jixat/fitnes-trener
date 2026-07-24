@@ -32,8 +32,6 @@ export function CalorieCalculator() {
   const fatGrams = Math.round((targetCalories * 0.25) / 9);
   const carbsGrams = Math.round((targetCalories - proteinGrams * 4 - fatGrams * 9) / 4);
 
-  const carbsGrams = Math.round((targetCalories - proteinGrams * 4 - fatGrams * 9) / 4);
-
   return (
     <div className="w-full max-w-md mx-auto space-y-5 pb-12">
       {/* Header Badge */}
