@@ -72,7 +72,7 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
               {/* Header inside drawer */}
               <div className="flex items-center justify-between pb-6 border-b border-[#30363d]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-md bg-[#238636] flex items-center justify-center text-white font-bold text-lg border border-[#2ea043]">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg border border-[#30363d]">
                     {user?.first_name ? user.first_name[0] : 'Ф'}
                   </div>
                   <div>
@@ -90,9 +90,9 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
                     triggerHaptic('light');
                     onClose();
                   }}
-                  className="p-2 rounded-md bg-transparent hover:bg-[#21262d] border border-transparent hover:border-[#30363d] text-[#8b949e] hover:text-[#c9d1d9] transition-all"
+                  className="p-2 rounded-md bg-transparent hover:bg-[#21262d] border border-transparent text-[#8b949e] hover:text-[#c9d1d9] transition-all"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5" strokeWidth={1.5} />
                 </button>
               </div>
 
@@ -118,16 +118,11 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
                           : 'bg-transparent hover:bg-[#161b22] border-transparent text-[#c9d1d9]'
                       } active:scale-[0.98]`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`p-2 rounded-md flex items-center justify-center border ${
-                            isActive
-                              ? 'bg-[#238636] border-[#2ea043] text-white'
-                              : 'bg-[#21262d] border-[#30363d] text-[#8b949e]'
-                          }`}
-                        >
-                          <Icon className="w-4 h-4" />
-                        </div>
+                      <div className="flex items-center gap-3.5">
+                        <Icon 
+                          className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#8b949e]'}`} 
+                          strokeWidth={1.5} 
+                        />
                         <div>
                           <div className={`text-sm font-bold capitalize leading-snug ${isActive ? 'text-white' : 'text-[#c9d1d9]'}`}>
                             {item.title}
@@ -140,8 +135,9 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
 
                       <ChevronRight
                         className={`w-4 h-4 transition-transform ${
-                          isActive ? 'text-[#3fb950] translate-x-1' : 'text-[#30363d]'
+                          isActive ? 'text-white translate-x-1' : 'text-[#30363d]'
                         }`}
+                        strokeWidth={1.5}
                       />
                     </button>
                   );
@@ -150,9 +146,9 @@ export function NavigationDrawer({ isOpen, onClose, activeTab, onSelectTab }) {
             </div>
 
             {/* Bottom Motivation Card */}
-            <div className="p-4 rounded-md bg-[#161b22] border border-[#30363d] text-center">
-              <div className="flex justify-center mb-1 text-[#e3b341]">
-                <Trophy className="w-5 h-5" />
+            <div className="p-4 rounded-md bg-transparent border border-[#30363d] text-center">
+              <div className="flex justify-center mb-1.5">
+                <Trophy className="w-5 h-5 text-[#8b949e]" strokeWidth={1.5} />
               </div>
               <div className="text-xs font-bold text-white">Твой прогресс сегодня</div>
               <div className="text-[10px] text-[#8b949e] mt-0.5">
