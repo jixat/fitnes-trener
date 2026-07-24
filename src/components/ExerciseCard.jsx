@@ -85,33 +85,44 @@ export function ExerciseCard({ workout }) {
       {/* Main Video / Photo Box */}
       <div className="relative rounded-md overflow-hidden bg-[#161b22] border border-[#30363d] group">
         <div
-          className="w-full h-64 relative flex flex-col items-center justify-center p-6 transition-all duration-300 bg-[#0d1117]"
+          className="w-full h-64 relative flex flex-col items-center justify-center transition-all duration-300 bg-[#0d1117]"
         >
-          <div className="absolute inset-0 opacity-10 pointer-events-none" />
+          {isPlaying && workout.youtubeId ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${workout.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${workout.youtubeId}&controls=0`}
+              title={workout.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full object-cover pointer-events-auto"
+            ></iframe>
+          ) : (
+            <div className="relative z-10 flex flex-col items-center justify-center text-[#c9d1d9] p-6 w-full h-full">
+              <div className="absolute inset-0 opacity-10 pointer-events-none" />
+              
+              <div className="p-4 rounded-full bg-[#21262d] border border-[#30363d] mb-3">
+                <Activity className="w-10 h-10 text-[#c9d1d9]" strokeWidth={1.5} />
+              </div>
 
-          <div className="relative z-10 flex flex-col items-center justify-center text-[#c9d1d9]">
-            <div className={`p-4 rounded-full bg-[#21262d] border border-[#30363d] mb-3 ${isPlaying ? 'animate-pulse' : ''}`}>
-              <Activity className={`w-10 h-10 text-[#c9d1d9] transition-transform duration-500 ${isPlaying ? 'rotate-12 scale-110' : ''}`} strokeWidth={1.5} />
+              <span className="text-[10px] font-bold px-3 py-1 rounded-md bg-[#21262d] border border-[#30363d] text-[#8b949e] flex items-center gap-1.5">
+                <Zap className="w-3 h-3 text-[#8b949e]" strokeWidth={1.5} />
+                Нажмите Play для видео
+              </span>
             </div>
-
-            <span className="text-[10px] font-bold px-3 py-1 rounded-md bg-[#21262d] border border-[#30363d] text-[#8b949e] flex items-center gap-1.5">
-              <Zap className="w-3 h-3 text-[#8b949e]" strokeWidth={1.5} />
-              {isPlaying ? 'Анимация техники (Воспроизведение)' : 'Пауза'}
-            </span>
-          </div>
+          )}
 
           <button
             onClick={() => {
               triggerHaptic('light');
               setIsPlaying(!isPlaying);
             }}
-            className="absolute bottom-4 right-4 p-2 rounded-md bg-[#21262d] hover:bg-[#30363d] border border-[#30363d] text-[#c9d1d9] active:scale-95 transition-all"
+            className="absolute bottom-4 right-4 p-2 rounded-md bg-[#21262d]/80 backdrop-blur-sm hover:bg-[#30363d] border border-[#30363d] text-[#c9d1d9] active:scale-95 transition-all z-20"
           >
             {isPlaying ? <Pause className="w-4 h-4" strokeWidth={1.5} /> : <Play className="w-4 h-4 fill-current" strokeWidth={1.5} />}
           </button>
 
-          <div className="absolute top-4 left-4 px-2 py-1 rounded-md bg-[#21262d] border border-[#30363d] text-[10px] font-bold text-[#8b949e] flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#238636] animate-ping" />
+          <div className="absolute top-4 left-4 px-2 py-1 rounded-md bg-[#21262d]/80 backdrop-blur-sm border border-[#30363d] text-[10px] font-bold text-[#8b949e] flex items-center gap-1.5 z-20">
+            <span className={`w-1.5 h-1.5 rounded-full bg-[#238636] ${isPlaying ? 'animate-ping' : ''}`} />
             <span>HD ВИДЕО</span>
           </div>
         </div>

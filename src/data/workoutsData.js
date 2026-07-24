@@ -64,6 +64,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 12,
     restSeconds: 60,
     type: 'video',
+    youtubeId: 'gcNh17Ckjgg',
     demoType: 'squat',
     description: 'Базовое многосуставное упражнение для развития мышц нижней части тела и укрепления коленей.',
     steps: [
@@ -88,6 +89,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 10,
     restSeconds: 60,
     type: 'video',
+    youtubeId: 'rT7DgCr-3pg',
     demoType: 'bench',
     description: 'Упражнение для проработки грудных мышц с увеличенной амплитудой движения по сравнению со штангой.',
     steps: [
@@ -112,6 +114,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 15,
     restSeconds: 45,
     type: 'video',
+    youtubeId: 'IODxDxX7oi4',
     demoType: 'pushup',
     description: 'Классическое упражнение с собственным весом для мышц верха тела.',
     steps: [
@@ -135,6 +138,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 20,
     restSeconds: 45,
     type: 'video',
+    youtubeId: 'mGvzVjuY8SY',
     demoType: 'squat',
     description: 'Приседания с собственным весом. Отличная база для тренировок дома.',
     steps: [
@@ -159,6 +163,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 12,
     restSeconds: 45,
     type: 'video',
+    youtubeId: 'QOVaHwm-Q6U',
     demoType: 'lunge',
     description: 'Отличное упражнение для проработки бедер и координации.',
     steps: [
@@ -182,6 +187,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 20,
     restSeconds: 30,
     type: 'video',
+    youtubeId: 'Xyd_fa5zoEU',
     demoType: 'crunch',
     description: 'Базовое упражнение для проработки прямой мышцы живота (кубиков).',
     steps: [
@@ -206,6 +212,7 @@ export const WORKOUTS_DATA = [
     defaultReps: 15,
     restSeconds: 45,
     type: 'video',
+    youtubeId: 'dZgVxmf6jkA',
     demoType: 'burpee',
     description: 'Интенсивное функциональное упражнение для быстрого сжигания калорий и выносливости.',
     steps: [
@@ -230,6 +237,7 @@ export const WORKOUTS_DATA = [
     defaultReps: '60 сек',
     restSeconds: 30,
     type: 'video',
+    youtubeId: 'pSHjTRCQxIw',
     demoType: 'plank',
     description: 'Статическое упражнение для укрепления глубоких мышц кора и осанки.',
     steps: [
