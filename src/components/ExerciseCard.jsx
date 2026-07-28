@@ -90,7 +90,7 @@ export function ExerciseCard({ workout }) {
           {isPlaying && workout.videoPath ? (
             <div className="absolute inset-0 w-full h-full z-10 bg-[#0d1117]">
               <video
-                src={workout.videoPath}
+                src={`${import.meta.env.BASE_URL}${workout.videoPath.slice(1)}`}
                 autoPlay
                 loop
                 muted
